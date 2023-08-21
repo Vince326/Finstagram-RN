@@ -8,10 +8,18 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import Feather from 'react-native-vector-icons/Feather';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
+import Comment from "../Comment/Comment";
 import styles from './styles';
+import { IPost } from '../../Types/models';
+
+interface IFeedPost {
+    post: IPost;
+}
 
 
-const FeedPost = ({ post }) => {
+
+const FeedPost = ({ post }: IFeedPost) => {
+
     return (
         <View style={styles.post}>
 
@@ -21,7 +29,7 @@ const FeedPost = ({ post }) => {
                 <Image source={{ uri: post.user.image }} style={styles.profilePic} />
             </View>
 
-            <Text style={styles.userName}>{post.user.userName}</Text>
+            <Text style={styles.userName}>{post.user.username}</Text>
 
             <Entypo name={"dots-three-horizontal"} size={16} style={styles.threeDots} />
 
@@ -60,24 +68,17 @@ const FeedPost = ({ post }) => {
                 {/* Post Descirption */}
 
                 <Text style={styles.text} >
-                    <Text style={styles.bold}>{post.description}</Text> {' '}{post.user.comment}
+                    <Text style={styles.bold}>{post.description}</Text> {' '}{post.description}
                 </Text>
 
 
                 {/*Comments */}
                 <Text>View {post.nofComments}</Text>
-                <View style={styles.comment}>
-                    <Text style={styles.commentText}>
-                        <Text style={styles.bold}>theophilus_yeager</Text>
-                        Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                    </Text>
-                    <AntDesign
-                        name={'hearto'}
-                        size={24}
-                        style={styles.icon}
-                        color={colors.black}
-                    />
-                </View>
+                {post.comments.map(comment => (
+                    <Comment key={comment.id} comment={comment} />
+                ))}
+
+
 
                 {/* Posted Date */}
                 <Text> January 4, 2023</Text>

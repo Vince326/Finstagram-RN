@@ -1,48 +1,20 @@
 import React from "react";
-import { View, ScrollView, StyleSheet } from 'react-native';
+import { View, ScrollView, StyleSheet, FlatList } from 'react-native';
 import FeedPost from "./src/components/FeedPost/FeedPost";
+import posts from './src/assets/data/posts.json';
 
-
-const post = {
-  id: '1',
-  createdAt: '19 December 2021',
-  image: 'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/images/1.jpg',
-  description:
-    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic repellendus unde blanditiis. Eos fugiat dolorem ea fugit aut sapiente corrupti autem dolores deleniti architecto, omnis, amet unde dignissimos quam minima?',
-  user: {
-    image: 'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/1.jpg',
-    username: 'vadimnotjustdev',
-  },
-  nofComments: 11,
-  nofLikes: 33,
-  comments: [
-    {
-      id: '1',
-      comment: 'Hello there',
-      user: {
-        username: 'vadimnotjustdev',
-      },
-    },
-    {
-      id: '2',
-      comment: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. H',
-      user: {
-        username: 'vadimnotjustdev',
-      },
-    },
-  ],
-};
 
 const App = () => {
-
-  <ScrollView style={styles.app}>
-
-    <FeedPost data={post} />
-    <FeedPost />
-
-  </ScrollView>
-
-}
+  return (
+    <View style={styles.app}>
+      <FlatList
+        data={posts}
+        showsVerticalScrollIndicator={false}
+        renderItem={(data) => <FeedPost post={item} />}
+      />
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   app: {
@@ -51,3 +23,5 @@ const styles = StyleSheet.create({
   },
 
 });
+
+export default App;
