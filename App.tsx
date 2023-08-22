@@ -1,18 +1,13 @@
 import React from "react";
 import { View, ScrollView, StyleSheet, FlatList } from 'react-native';
-import FeedPost from "./src/components/FeedPost/FeedPost";
-import posts from './src/assets/data/posts.json';
+import HomeScreen from "./src/screens/HomeScreen/HomeScreen";
 
 
 const App = () => {
   return (
     <View style={styles.app}>
-      <FlatList
-        data={posts}
-        showsVerticalScrollIndicator={false}
-        renderItem={(data) => <FeedPost post={item} />}
-      />
-    </View>
+      <HomeScreen />
+    </View >
   );
 };
 

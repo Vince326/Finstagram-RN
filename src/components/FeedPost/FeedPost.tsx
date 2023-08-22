@@ -1,5 +1,6 @@
 import React from "react";
 import { View, Text, Image } from 'react-native';
+import { useState } from "react";
 import colors from '../../theme/colors';
 import fonts from "../../assets/fonts/fonts";
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -7,6 +8,7 @@ import { StyleSheet } from "react-native/types";
 import Entypo from 'react-native-vector-icons/Entypo';
 import Feather from 'react-native-vector-icons/Feather';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+
 
 import Comment from "../Comment/Comment";
 import styles from './styles';
@@ -19,6 +21,13 @@ interface IFeedPost {
 
 
 const FeedPost = ({ post }: IFeedPost) => {
+
+    const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
+
+    const toggleDesciptionExpanded = () => {
+        setIsDescriptionExpanded(!isDescriptionExpanded);
+    };
+
 
     return (
         <View style={styles.post}>
@@ -68,8 +77,10 @@ const FeedPost = ({ post }: IFeedPost) => {
                 {/* Post Descirption */}
 
                 <Text style={styles.text} >
-                    <Text style={styles.bold}>{post.description}</Text> {' '}{post.description}
+                    <Text style={styles.bold}>{post.description}
+                        numberofLines={isDescriptionExpanded ? 0 : 3}</Text> {' '}{post.description}
                 </Text>
+                <Text onPress={{ toggleDesciptionExpanded }}>{isDescriptionExpanded ? 'less' : 'more'} </Text>
 
 
                 {/*Comments */}
