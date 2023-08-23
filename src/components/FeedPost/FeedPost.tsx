@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, Image } from 'react-native';
+import { View, Text, Image, Pressable } from 'react-native';
 import { useState } from "react";
 import colors from '../../theme/colors';
 import fonts from "../../assets/fonts/fonts";
@@ -13,6 +13,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import Comment from "../Comment/Comment";
 import styles from './styles';
 import { IPost } from '../../Types/models';
+import DoublePressable from '../DoublePressable';
 
 interface IFeedPost {
     post: IPost;
@@ -22,11 +23,24 @@ interface IFeedPost {
 
 const FeedPost = ({ post }: IFeedPost) => {
 
+    //Sets the State for the Description Expansion on post
     const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
 
-    const toggleDesciptionExpanded = () => {
-        setIsDescriptionExpanded(!isDescriptionExpanded);
+    const toggleDescriptionExpanded = () => {
+        setIsDescriptionExpanded((existingValue) => { return !existingValue });
+
+        setIsDescriptionExpanded((existingValue) => { return !existingValue });
+
     };
+
+    //Sets the state for if like button is pressed
+    const [isPostLiked, setIsPostLiked] = useState(false);
+
+    const toggleLikeButton = () => {
+        setIsPostLiked((existingValue) => { return !existingValue });
+
+        //setIsPostLiked((existingValue) => { return !existingValue });
+    }
 
 
     return (
@@ -43,18 +57,21 @@ const FeedPost = ({ post }: IFeedPost) => {
             <Entypo name={"dots-three-horizontal"} size={16} style={styles.threeDots} />
 
             {/*Content*/}
-            <Image source={{ uri: post.image }} style={styles.image} />
-
+            <DoublePressable onDoublePress={toggleLikeButton}>
+                <Image source={{ uri: post.image }} style={styles.image} />
+            </DoublePressable>
 
             {/* Footer */}
             <View style={styles.footer}>
                 <View style={styles.iconContainer}>
-                    <AntDesign
-                        name={'hearto'}
-                        size={24}
-                        style={styles.icon}
-                        color={colors.black}
-                    />
+                    <Pressable onPress={toggleLikeButton}>
+                        <AntDesign
+                            name={isPostLiked ? 'heart' : 'hearto'}
+                            size={24}
+                            style={styles.icon}
+                            color={isPostLiked ? colors.accent : colors.black}
+                        />
+                    </Pressable>
 
                     <Ionicons name='chatbubble-outline' size={24} color={colors.black}
                         style={styles.icon} />
@@ -80,7 +97,7 @@ const FeedPost = ({ post }: IFeedPost) => {
                     <Text style={styles.bold}>{post.description}
                         numberofLines={isDescriptionExpanded ? 0 : 3}</Text> {' '}{post.description}
                 </Text>
-                <Text onPress={{ toggleDesciptionExpanded }}>{isDescriptionExpanded ? 'less' : 'more'} </Text>
+                <Text onPress={toggleDescriptionExpanded}>{isDescriptionExpanded ? 'less' : 'more'} </Text>
 
 
                 {/*Comments */}
